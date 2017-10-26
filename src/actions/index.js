@@ -1,6 +1,6 @@
 import axios from 'axios'
 import {AT_POSTS} from "./action-types";
-const END_POINT = 'http://localhost:300'
+const END_POINT = 'http://localhost:3000'
 
 export function readAllPost() {
     return function (dispatch) {
