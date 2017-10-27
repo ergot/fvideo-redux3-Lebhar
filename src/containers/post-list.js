@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {readAllPost, deletePost} from "../actions/index";
 import PostListItem from '../components/post-list-item'
-
+import ReactCSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
 
 class PostList extends React.Component {
     componentWillMount (){
@@ -34,9 +34,14 @@ class PostList extends React.Component {
                         <th>Action</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <ReactCSSTransitionGroup
+                        transitionName="fade"
+                        transitionEnterTimeout={500}
+                        transitionLeaveTimeout={300}
+                        component="tbody"
+                    >
                         {this.renderPosts()}
-                    </tbody>
+                    </ReactCSSTransitionGroup>
                 </table>
             </div>
         )
