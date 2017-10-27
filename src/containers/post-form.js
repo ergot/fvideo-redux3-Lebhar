@@ -8,34 +8,36 @@ import {browserHistory} from 'react-router'
 
 const formConfig = {
     form: 'createPostForm',
-    fields: ['title', 'content', 'author']
+    fields: ['title', 'content', 'author'],
+    validate: validate
 }
 
 class PostForm extends React.Component {
     render() {
-        const {fields, handleSubmit} = this.props
+        const {fields:{title, content, author}, handleSubmit, errors} = this.props
 
         return (
             <div>
                 <h1>Nouveau post</h1>
                 <form onSubmit={handleSubmit(this.createPost.bind(this))} >
-                    <div className="form-group">
+
+                    <div className={`form-group ${title.touched && title.invalid ? 'has-danger' : '' }`}>
                         <label >titre</label>
-                        <input type="text" className="form-control" {...fields.title}/>
-                        <div></div>
+                        <input type="text" className="form-control" {...title}/>
+                        <div>{title.touched && errors.title}</div>
                     </div>
-                    <div className="form-group">
+                    <div className={`form-group ${content.touched && content.invalid ? 'has-danger' : '' }`}>
                         <label >descirption</label>
-                        <input type="textarea" className="form-control" {...fields.content}/>
-                        <div></div>
+                        <input type="textarea" className="form-control" {...content}/>
+                        <div>{content.touched && errors.content}</div>
                     </div>
-                    <div className="form-group">
+                    <div className={`form-group ${author.touched && author.invalid ? 'has-danger' : '' }`}>
                         <label >Auteur</label>
-                        <input type="text" className="form-control" {...fields.author}/>
-                        <div></div>
+                        <input type="text" className="form-control" {...author}/>
+                        <div>{author.touched && errors.author}</div>
                     </div>
                     <Link to={'/'} className='button_space'><button className='btn btn-danger'>Retour</button></Link>
-                    <button className="btn btn-primary" type='submit'>cree</button>
+                    <button className="btn btn-primary" type='submit' disabled={this.props.invalid}>cree</button>
                 </form>
             </div>
         )
@@ -53,6 +55,22 @@ class PostForm extends React.Component {
 //         posts: state.posts
 //     }
 // }
+
+ function validate(values) {
+    const errors = {}
+    if(!values.title){
+        errors.title = 'veuillez remplir le titre'
+    }
+    if(!values.content){
+        errors.content = 'veuillez remplir le content'
+    }
+    if(!values.author){
+        errors.author = 'veuillez remplir l author'
+    }
+
+    return errors
+
+ }
 
 const mapDispatchToProps = (dispatch) => ({
     ...bindActionCreators({createPost}, dispatch),
