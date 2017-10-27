@@ -1,13 +1,15 @@
 import React from 'react'
 
-class PostContent extends React.Component {
-    render() {
+const PostContent = ({post}) => {
+
         return (
             <div>
-                <h1>contenu d un post</h1>
+                <h2>{post.title}</h2>
+                <p>{post.content}</p>
+                <p>Autheur: {post.author}</p>
             </div>
         )
-    }
+
 }
 
 export default PostContent
